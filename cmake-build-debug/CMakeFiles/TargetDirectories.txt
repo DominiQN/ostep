@@ -1,3 +1,3 @@
-/Users/dongminnam/Documents/ostep/cmake-build-debug/CMakeFiles/ostep.dir
-/Users/dongminnam/Documents/ostep/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/dongminnam/Documents/ostep/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/dongmin/Documents/study/ostep/cmake-build-debug/CMakeFiles/ostep.dir
+/Users/dongmin/Documents/study/ostep/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/dongmin/Documents/study/ostep/cmake-build-debug/CMakeFiles/rebuild_cache.dir
