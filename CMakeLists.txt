@@ -10,4 +10,5 @@ add_executable(ostep main.c
         my/cpu-api/q4.c
         my/cpu-api/q5.c
         my/cpu-api/q6.c
-        my/cpu-api/q6-2.c)
+        my/cpu-api/q6-2.c
+        my/cpu-api/q7.c)
