@@ -9,13 +9,13 @@
 int main(int argc, char *argv[])
 {
     char *filepath = "./q2.txt";
-    int fd = open(filepath, O_CREAT|O_RDONLY, 0644);
-    if (fd < 0) {
+    int fdInParent = open(filepath, O_CREAT|O_RDONLY, 0644);
+    if (fdInParent < 0) {
         perror("open");
         return 1;
     }
 
-    printf("fd %d\n", fd);
+    printf("fd %d\n", fdInParent);
 
     // char *content = "Hello, World!";
     // if (write(fd, content, strlen(content)) == -1) {
@@ -48,6 +48,12 @@ int main(int argc, char *argv[])
         // child
         printf("read in child\n");
 
+        int fdInChild = open(filepath, O_RDONLY, 0644);
+        if (fdInChild < 0) {
+            perror("open");
+            return 1;
+        }
+
         // // 파일 오프셋을 파일의 시작으로 이동
         // if (lseek(fd, 0, SEEK_SET) == (off_t) -1) {
         //     perror("lseek");
@@ -57,10 +63,10 @@ int main(int argc, char *argv[])
 
         char buffer[128];
         ssize_t bytesRead;
-        bytesRead = read(fd, buffer, sizeof(buffer) - 1);
+        bytesRead = read(fdInChild, buffer, sizeof(buffer) - 1);
         if (bytesRead == -1) {
             perror("read in child\n");
-            close(fd);
+            close(fdInChild);
             return 1;
         }
 
@@ -68,7 +74,7 @@ int main(int argc, char *argv[])
         printf("file content in child: '%s'\n", buffer);
 
         // 파일 닫기
-        if (close(fd) == -1) {
+        if (close(fdInChild) == -1) {
             perror("close");
             return 1;
         }
@@ -78,18 +84,18 @@ int main(int argc, char *argv[])
         printf("read in parent\n");
 
         // 파일 오프셋을 파일의 시작으로 이동
-        if (lseek(fd, 0, SEEK_SET) == (off_t) -1) {
-            perror("lseek");
-            close(fd);
-            return 1;
-        }
+        // if (lseek(fdInParent, 0, SEEK_SET) == (off_t) -1) {
+        //     perror("lseek");
+        //     close(fdInParent);
+        //     return 1;
+        // }
 
         char buffer[128];
         ssize_t bytesRead;
-        bytesRead = read(fd, buffer, sizeof(buffer) - 1);
+        bytesRead = read(fdInParent, buffer, sizeof(buffer) - 1);
         if (bytesRead == -1) {
             perror("read in parent\n");
-            close(fd);
+            close(fdInParent);
             return 1;
         }
 
@@ -97,7 +103,7 @@ int main(int argc, char *argv[])
         printf("file content in parent: '%s'\n", buffer);
 
         // 파일 닫기
-        if (close(fd) == -1) {
+        if (close(fdInParent) == -1) {
             perror("close");
             return 1;
         }
